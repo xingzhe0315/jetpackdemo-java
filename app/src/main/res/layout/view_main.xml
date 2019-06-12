@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabMode="scrollable" />
+
+    <com.xingzhe.ui_libaray.viewpager.XZViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="MultiData"
+        android:textAllCaps="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"/>
+
+    <Button
+        android:id="@+id/header_list"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="HeaderList"
+        android:textAllCaps="false"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/button"
+        android:layout_margin="15dp"/>
+
+</RelativeLayout>
