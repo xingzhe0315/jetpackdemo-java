@@ -30,7 +30,6 @@ public class DefaultLoadMoreView extends LinearLayout implements LoadMoreView {
 
     public DefaultLoadMoreView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs,0);
-
     }
 
     public DefaultLoadMoreView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {

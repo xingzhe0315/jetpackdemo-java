@@ -28,12 +28,7 @@ public abstract class SimpleDataView<Data,VM extends  BaseViewModel<Data>> exten
     public SimpleDataView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         loadingView = createLoadingView();
-        loadingView.setRetryHandler(new DataRetryHandler() {
-            @Override
-            public void onHandleRetry() {
-                startLoad();
-            }
-        });
+        loadingView.setRetryHandler(this::startLoad);
         addView(loadingView);
         viewModel = createViewModel();
         viewModel.getLiveData().observe((AppCompatActivity) context, this::onDataSuccess);
@@ -41,7 +36,7 @@ public abstract class SimpleDataView<Data,VM extends  BaseViewModel<Data>> exten
     }
 
     protected LoadingView createLoadingView() {
-        return new LoadingView(getContext());
+        return new DefaultLoadingView(getContext());
     }
 
     public void startLoad() {

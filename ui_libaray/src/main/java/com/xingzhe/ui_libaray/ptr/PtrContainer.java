@@ -1,12 +1,13 @@
-package com.xingzhe.ui_libaray.dataview;
+package com.xingzhe.ui_libaray.ptr;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.xingzhe.ui_libaray.DensityUtil;
 import com.xingzhe.ui_libaray.R;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -44,9 +45,10 @@ public class PtrContainer extends PtrFrameLayout {
         return null;
     }
 
-    public static class DefaultPtrHandler extends RelativeLayout implements PtrUIHandler {
+    public static class DefaultPtrHandler extends PtrBaseHeaderView {
         private ProgressBar progressBar;
         private TextView refreshTip;
+
         public DefaultPtrHandler(Context context) {
             this(context,null);
         }
@@ -57,35 +59,49 @@ public class PtrContainer extends PtrFrameLayout {
 
         public DefaultPtrHandler(Context context, AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
-            View.inflate(context, R.layout.view_default_header,this);
-            progressBar = findViewById(R.id.progress);
-            refreshTip = findViewById(R.id.refresh_tips);
-
         }
 
         @Override
-        public void onUIReset(PtrFrameLayout frame) {
+        View createHeaderView(Context context) {
+            View view = View.inflate(context, R.layout.view_default_header,null);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(context,60f)));
+            progressBar = view.findViewById(R.id.progress);
+            refreshTip = view.findViewById(R.id.refresh_tips);
+            return view;
+        }
+
+        @Override
+        void setNormalState() {
             refreshTip.setText("下拉刷新");
         }
 
         @Override
-        public void onUIRefreshPrepare(PtrFrameLayout frame) {
+        void setReadyState() {
             refreshTip.setText("释放刷新");
         }
 
         @Override
-        public void onUIRefreshBegin(PtrFrameLayout frame) {
-            refreshTip.setText("正在刷新");
-        }
-
-        @Override
-        public void onUIRefreshComplete(PtrFrameLayout frame) {
+        void setSuccessState() {
             refreshTip.setText("刷新成功");
         }
 
         @Override
-        public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
+        void setRefreshingState() {
+            refreshTip.setText("正在刷新");
 
         }
+
+        @Override
+        void onPositionMove(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator) {
+            if (isRefreshing){
+                return;
+            }
+            if (ptrIndicator!=null && ptrIndicator.getCurrentPercent() >= 1f){
+                setReadyState();
+            } else {
+                setNormalState();
+            }
+        }
+
     }
 }

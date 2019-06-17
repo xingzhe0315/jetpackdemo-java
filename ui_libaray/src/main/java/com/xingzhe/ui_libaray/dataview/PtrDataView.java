@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xingzhe.framework.data.BaseObserver;
+import com.xingzhe.ui_libaray.ptr.PtrContainer;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -14,7 +15,7 @@ import in.srain.cube.views.ptr.PtrHandler;
 /**
  * Created by wumm on 2019/4/4.
  */
-public abstract class PtrDataView<Data,VM extends BaseViewModel<Data>> extends PtrContainer{
+public abstract class PtrDataView<Data,VM extends BaseViewModel<Data>> extends PtrContainer {
 
     private InnerDataView innerDataView;
 

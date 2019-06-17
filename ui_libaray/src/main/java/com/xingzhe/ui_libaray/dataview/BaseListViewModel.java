@@ -21,7 +21,7 @@ public abstract class BaseListViewModel<Data> extends BaseViewModel<List<Data>> 
 
     private MutableLiveData<List<Data>> appendDataList;
 
-    protected int page=1;
+    protected int page = 1;
 
     public void setPage(int page) {
         this.page = page;
@@ -41,7 +41,7 @@ public abstract class BaseListViewModel<Data> extends BaseViewModel<List<Data>> 
         return loadMoreError;
     }
 
-    MutableLiveData<List<Data>> getAppendDataLiveData(){
+    MutableLiveData<List<Data>> getAppendDataLiveData() {
         if (appendDataList == null) {
             appendDataList = new MutableLiveData<>();
         }

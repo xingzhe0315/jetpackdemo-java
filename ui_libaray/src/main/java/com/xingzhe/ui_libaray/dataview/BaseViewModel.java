@@ -20,14 +20,14 @@ public abstract class BaseViewModel<Data> extends ViewModel {
     private MutableLiveData<BaseObserver.ResponseError> errorData;
 
 
-    public MutableLiveData<Data> getLiveData() {
+    MutableLiveData<Data> getLiveData() {
         if (liveData == null) {
             liveData = new MutableLiveData<>();
         }
         return liveData;
     }
 
-    public MutableLiveData<BaseObserver.ResponseError> getErrorData() {
+    MutableLiveData<BaseObserver.ResponseError> getErrorData() {
         if (errorData == null) {
             errorData = new MutableLiveData<>();
         }
@@ -36,7 +36,7 @@ public abstract class BaseViewModel<Data> extends ViewModel {
 
     public abstract Observable<? extends BaseResponseData> getObservable();
 
-    public void loadData() {
+    void loadData() {
         getObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<BaseResponseData>() {

@@ -12,6 +12,19 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseObserver<Data extends BaseResponseData> implements Observer<Data> {
     private Disposable disposable;
     private List<Data> dataList;
+//
+//    private Context context;
+//    private String loadingMessage;
+//
+//    public BaseObserver(Context context, String loadingMessage) {
+//        this.context = context;
+//        this.loadingMessage = loadingMessage;
+//    }
+//
+//    public void showLoading(Context context, String message){
+//        this.context = context;
+//        this.loadingMessage = message;
+//    }
 
     @Override
     public void onSubscribe(Disposable d) {

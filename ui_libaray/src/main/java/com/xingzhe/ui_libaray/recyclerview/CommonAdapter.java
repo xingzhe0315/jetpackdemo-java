@@ -14,9 +14,9 @@ import java.util.List;
  * Created by wumm on 2019/3/20.
  */
 public abstract class CommonAdapter<Data> extends RecyclerView.Adapter<CommonViewHolder> {
-    public static final int VIEW_TYPE_HEADER_BASE = 100;
-    public static final int VIEW_TYPE_FOOTER_BASE = 200;
-    public static final int VIEW_TYPE_NORMAL = 0;
+    private static final int VIEW_TYPE_HEADER_BASE = 100;
+    private static final int VIEW_TYPE_FOOTER_BASE = 200;
+    private static final int VIEW_TYPE_NORMAL = 0;
     private List<Data> data;
     protected Context context;
 
@@ -32,7 +32,7 @@ public abstract class CommonAdapter<Data> extends RecyclerView.Adapter<CommonVie
         notifyDataSetChanged();
     }
 
-    public void dataAppend(List<Data> data) {
+    private void dataAppend(List<Data> data) {
         if (this.data == null) {
             this.data = new ArrayList<>(data);
         } else {
@@ -89,7 +89,7 @@ public abstract class CommonAdapter<Data> extends RecyclerView.Adapter<CommonVie
         }
     }
 
-    protected void bindFooterView(View view, int position) {
+    private void bindFooterView(View view, int position) {
 
     }
 

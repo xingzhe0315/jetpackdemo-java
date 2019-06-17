@@ -4,15 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-
-import com.xingzhe.ui_libaray.R;
 
 /**
  * Created by wumm on 2019/3/20.
  */
-public class LoadingView extends RelativeLayout {
+public abstract class LoadingView extends RelativeLayout {
 
     public static final int STATE_LOADING = 0;
     public static final int STATE_ERROR = -1;
@@ -23,13 +20,11 @@ public class LoadingView extends RelativeLayout {
     private View mLoadingView;
     private View mErrorView;
     private View mEmptyView;
-    private ProgressBar progress;
 
     private DataRetryHandler retryHandler;
 
     public LoadingView(Context context) {
         this(context, null);
-        showLoading();
     }
 
     public LoadingView(Context context, AttributeSet attrs) {
@@ -38,6 +33,7 @@ public class LoadingView extends RelativeLayout {
 
     public LoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        showLoading();
     }
 
     public void setState(int state) {
@@ -62,30 +58,24 @@ public class LoadingView extends RelativeLayout {
         displayView(mLoadingView);
     }
 
-    private View createLoadingView() {
-        View view = View.inflate(getContext(), R.layout.view_state_loading, null);
-        progress = ((ProgressBar) view.findViewById(R.id.progress));
-        return view;
-    }
+    protected abstract View createLoadingView();
 
     private void showError() {
         if (mErrorView == null) {
             mErrorView = createErrorView();
             mErrorView.setLayoutParams(createLayoutParams());
+            mErrorView.setOnClickListener(v -> {
+                if (retryHandler != null) {
+                    retryHandler.onHandleRetry();
+                    showLoading();
+                }
+            });
         }
+
         displayView(mErrorView);
     }
 
-    private View createErrorView() {
-        View view = View.inflate(getContext(), R.layout.view_state_error, null);
-        view.setOnClickListener(v -> {
-            if (retryHandler != null){
-                retryHandler.onHandleRetry();
-                showLoading();
-            }
-        });
-        return view;
-    }
+    protected abstract View createErrorView();
 
     private void showEmpty() {
         if (mEmptyView == null) {
@@ -95,10 +85,7 @@ public class LoadingView extends RelativeLayout {
         displayView(mEmptyView);
     }
 
-    private View createEmptyView() {
-        View view = View.inflate(getContext(), R.layout.view_state_empty, null);
-        return view;
-    }
+    protected abstract View createEmptyView();
 
     private void displayView(View view) {
         removeAllViews();
