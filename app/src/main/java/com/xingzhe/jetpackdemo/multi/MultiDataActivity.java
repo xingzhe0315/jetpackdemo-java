@@ -9,12 +9,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.xingzhe.framework.data.RetrofitClient;
+import com.xingzhe.framework.data.SingleObserver;
 import com.xingzhe.jetpackdemo.MainListView;
 import com.xingzhe.jetpackdemo.R;
+import com.xingzhe.jetpackdemo.service.ApiService;
 import com.xingzhe.jetpackdemo.service.bean.AccountList;
+import com.xingzhe.jetpackdemo.service.bean.ArticleList;
 import com.xingzhe.ui_libaray.dataview.SimpleDataView;
 
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MultiDataActivity extends AppCompatActivity {
 
@@ -48,6 +54,35 @@ public class MultiDataActivity extends AppCompatActivity {
             adapter = new MainListView.AccountAdapter(getContext());
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    AccountList.Account account = (AccountList.Account) tab.getTag();
+                    RetrofitClient.getRetrofit().create(ApiService.class).getArticalList(account.getId()+"",1)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new SingleObserver<ArticleList>() {
+                                @Override
+                                protected boolean onDataError(ResponseError error) {
+                                    return false;
+                                }
+
+                                @Override
+                                protected void onDataSuccess(ArticleList response) {
+                                    adapter.setData(response.getData().getDatas());
+                                }
+                            });
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
             return view;
         }
 
@@ -57,6 +92,7 @@ public class MultiDataActivity extends AppCompatActivity {
             for (AccountList.Account account : accountList) {
                 TabLayout.Tab tab = tabLayout.newTab();
                 tab.setText(account.getName());
+                tab.setTag(account);
                 tabLayout.addTab(tab);
             }
             adapter.setData(homeData.articleList);

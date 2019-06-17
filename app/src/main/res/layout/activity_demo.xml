@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="7dp"
+    tools:context=".DemoActivity">
+    <TextView
+        android:id="@+id/one"
+        style="@style/normalItemStyle"
+        android:text="普通界面"/>
+    <TextView
+        android:id="@+id/two"
+        style="@style/normalItemStyle"
+        android:text="普通列表"/>
+    <TextView
+        android:id="@+id/three"
+        style="@style/normalItemStyle"
+        android:text="一个界面依赖多个接口"/>
+    <TextView
+        android:id="@+id/four"
+        style="@style/normalItemStyle"
+        android:text="一个列表依赖某个头部接口返回的数据"/>
+    <TextView
+        android:id="@+id/five"
+        style="@style/normalItemStyle"
+        android:text="一个界面有多个依赖接口的view"/>
+</LinearLayout>

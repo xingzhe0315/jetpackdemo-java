@@ -92,5 +92,6 @@ public class AccountList  extends BaseResponseData<List<AccountList.Account>> {
         public void setChildren(List<?> children) {
             this.children = children;
         }
+
     }
 }
